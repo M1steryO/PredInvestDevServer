@@ -1,0 +1,111 @@
+.account-card {
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    max-width: 860px;
+    margin-inline: auto;
+    border-radius: 15px;
+}
+
+.account-card .account-header {
+    background-color: var(--color-dark-blue);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    padding-inline: 25px;
+    padding-block: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.account-card .page-title {
+    color: var(--color-light);
+    text-align: center;
+}
+
+.account-card .edit-profile-btn {
+    height: fit-content;
+    align-self: end;
+    background-color: var(--color-yellow);
+    border: none;
+    border-radius: var(--btn-radius);
+    color: var(--color-dark-blue);
+}
+
+.account-card .edit-profile-btn-container {
+    display: flex;
+    justify-content: end;
+    flex-grow: 1;
+}
+
+.account-card .edit-profile-btn:hover {
+    background-color: var(--color-dark-yellow);
+}
+
+.account-card .account-header img {
+    width: 130px;
+    height: 130px;
+    z-index: 1;
+    border-radius: 50%;
+    align-self: center;
+    border: 0;
+}
+
+.account-card .account-details {
+    color: var(--color-light);
+    align-self: end;
+}
+
+.account-card .account-body {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+}
+
+.account-card .account-body .account-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.account-card .account-body .account-block .block-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 !important;
+}
+
+.account-card .account-body .account-block .block-field {
+    display: flex;
+    border-radius: 10px;
+    padding: 10px;
+    align-items: center;
+}
+
+.account-card .account-body .account-block .block-value {
+    margin: 0 !important;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.account-card .block-value {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .account-card .account-header {
+        flex-direction: column;
+        row-gap: 15px;
+    }
+
+    .account-card .account-header .account-data {
+        width: 100%;
+    }
+
+    .account-card .account-header .account-details {
+        flex-grow: 1;
+    }
+
+    .account-card .account-header .edit-profile-btn {
+        width: 100%;
+        flex-grow: 0;
+    }
+}

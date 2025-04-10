@@ -1,0 +1,7 @@
+.account-settings .submit-form-btn {
+    background-color: var(--color-yellow)
+}
+
+.account-settings .submit-form-btn:hover {
+    background-color: var(--color-dark-yellow) !important;
+}

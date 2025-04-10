@@ -1,0 +1,40 @@
+.about-section {
+    background-color: var(--color-dark-blue);
+    color: var(--color-light);
+    padding: 90px 0;
+}
+
+.about-section .heading-container {
+    margin-bottom: 45px;
+}
+
+.about-section .row {
+    align-items: center;
+}
+
+.about-section .img-box img {
+    max-width: 100%;
+}
+
+.about-section .detail-box h3 {
+    font-weight: bold;
+}
+
+.about-section .detail-box p {
+    margin-top: 15px;
+}
+
+.about-section .detail-box a {
+    display: inline-block;
+    padding: 10px 45px;
+    background-color: var(--color-yellow);
+    color: var(--color-light);
+    border-radius: var(--btn-radius);
+    transition: all 0.3s;
+    border: none;
+    margin-top: 15px;
+}
+
+.about-section .detail-box a:hover {
+    background-color: var(--color-dark-yellow);
+}

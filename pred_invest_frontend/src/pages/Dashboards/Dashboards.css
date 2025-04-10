@@ -1,0 +1,25 @@
+.dashboard-filter{
+    border-color: var(--color-dark-blue);
+}
+
+.dashboard-filter .ant-select-selector {
+    padding-block: 18px;
+    font-size: 16px;
+}
+.dashboard-filter.ant-select{
+    width: 200px;
+}
+
+.dashboard-filter .ant-select-focused:focus-within {
+    border-color: var(--color-yellow) !important; /* зелёный */
+    box-shadow: 0 0 0 2px rgba(255, 243, 0, 0.32) !important; /* мягкое свечение */
+}
+
+.dashboard-filter .ant-select-focused:hover {
+    border-color: var(--color-yellow) !important; /* зелёный */
+
+}
+
+.recharts-cartesian-axis-tick-value tspan{
+    font-size: 12px;
+}

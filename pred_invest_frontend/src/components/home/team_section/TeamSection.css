@@ -1,0 +1,64 @@
+.team-section {
+    text-align: center;
+    color: var(--color-dark-blue);
+    padding: 90px 0;
+
+}
+
+.team-section .heading-container {
+    justify-content: center;
+}
+
+.team-section .team-container {
+    padding: 0 15px;
+}
+
+.team-section .team-container .row {
+    justify-content: center;
+}
+
+.team-section .team-container .box {
+    padding-top: 45px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.1s;
+    margin-top: 45px;
+    background: var(--color-dark-blue)
+}
+
+.team-section .team-container .box .img-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-section .team-container .box .img-box img {
+    width: 120px;
+    border-radius: 100%;
+    border: 5px solid var(--color-light);
+}
+
+.team-section .team-container .box .detail-box {
+    margin: 25px 0;
+    color: var(--color-light)
+}
+
+.team-section .team-container .box .detail-box h5 {
+    color: var(--color-yellow);
+    font-weight: 600;
+    position: relative;
+}
+
+.team-section .team-container .box .social-box {
+    padding: 10px 45px 20px 45px;
+    display: flex;
+    justify-content: center;
+}
+
+.team-section .team-container .box .social-box a {
+    color: var(--color-light);
+}
+
+.team-section .team-container .box .social-box a:hover {
+    color: var(--color-yellow);
+}

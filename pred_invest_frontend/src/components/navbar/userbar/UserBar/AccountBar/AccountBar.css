@@ -1,0 +1,25 @@
+.account-bar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.account-bar .account-name {
+    border: none;
+    color: var(--color-light);
+    background: transparent;
+    border-bottom: 1px solid var(--color-light);
+    padding: 8px 12px
+}
+
+
+.account-bar::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 6px solid var(--color-yellow);
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    border-bottom: 0;
+    margin-inline-start: -8px;
+}

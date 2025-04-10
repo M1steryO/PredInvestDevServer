@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pred_invest
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  go-server:
+    image: m1stery/go-server:1.0.0
+    container_name: go-server
+    build: ./PredInvestAuthServer
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres
+      - flask-server
+
+  flask-server:
+    build: ./PredInvestDataServer
+    container_name: flask-server
+    ports:
+      - "5001:5001"
+    depends_on:
+      - postgres
+  frontend:
+    build: ./pred_invest_frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - go-server
+      - flask-server
+  
+
+volumes:
+  pgdata: {}
+
+# networks:
+#   backend:

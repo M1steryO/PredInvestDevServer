@@ -1,0 +1,82 @@
+.custom-form {
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 18px;
+    margin-inline: auto;
+    /*background-color: var(--color-dark-blue);*/
+    color: var(--bs-light);
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+}
+
+.custom-form h1 {
+    margin-bottom: 2rem;
+}
+
+.custom-form .submit-form-btn {
+    width: 100%;
+    /*border: 1px solid var(--color-dark-blue);*/
+    color: var(--color-light);
+    background-color: var(--color-dark-blue);
+    margin-top: 20px;
+    padding-block: 16px;
+    border-radius: 12px;
+}
+
+.custom-form .submit-form-btn:hover {
+    background-color: var(--color-dark-blue) !important;
+}
+
+.custom-form .form-title {
+    text-align: start;
+    font-size: 32px;
+}
+
+.custom-form .form-agreement-text {
+    text-align: start;
+    font-size: 12px;
+}
+
+.custom-form .form-control {
+    border: var(--bs-border-width) solid var(--color-light);
+}
+
+.custom-form .form-control:focus {
+    border-color: var(--color-yellow);
+    box-shadow: 0 0 .25rem var(--color-yellow);
+}
+
+.custom-form .form-check-input:focus {
+    border-color: var(--color-yellow);
+    box-shadow: 0 0 .25rem var(--color-yellow);
+}
+
+.custom-form .form-check-input:checked {
+    background-color: var(--color-yellow);
+    border-color: var(--color-yellow);
+}
+
+.custom-form .ant-form-item {
+    margin-bottom: 26px;
+}
+
+.custom-form .ant-form-item-explain-error {
+    text-align: start;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.custom-form .ant-input-outlined:focus-within {
+    border-color: var(--color-yellow) !important; /* зелёный */
+    box-shadow: 0 0 0 2px rgba(255, 243, 0, 0.32) !important; /* мягкое свечение */
+}
+
+.custom-form .ant-input-outlined:hover {
+    border-color: var(--color-yellow) !important; /* зелёный */
+
+}
+
+@media (max-width: 768px) {
+    .custom-form h1 {
+        font-size: 32px;
+    }
+}

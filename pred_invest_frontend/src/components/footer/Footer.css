@@ -1,0 +1,15 @@
+.footer-section {
+    position: relative;
+    background-color: var(--color-dark-blue);
+    text-align: center;
+    color: var(--color-light);
+    padding: 20px 0;
+}
+
+.footer-section a {
+    color: var(--color-yellow);
+}
+
+.footer-section a:hover {
+    color: var(--color-dark-yellow);
+}

@@ -1,0 +1,28 @@
+.account-menu {
+    left: auto !important;
+    margin-top: -10px !important;
+    opacity: 0;
+    animation: fadeInAnimation 0.25s ease-in forwards;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    border-color: var(--color-yellow);
+
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.account-menu .dropdown-item {
+    color: var(--color-dark-gray);
+}
+
+.account-menu .dropdown-item.active,
+.account-menu .dropdown-item:active {
+    background-color: var(--color-yellow);
+    color: var(--color-dark-gray);
+}

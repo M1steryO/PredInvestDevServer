@@ -1,0 +1,63 @@
+.collapse {
+    visibility: initial;
+}
+
+
+.custom-navbar .login-btn {
+    border: 1px solid var(--color-yellow);
+    border-radius: 12px;
+    width: 80px;
+    color: var(--color-light);
+    text-align: center;
+}
+
+.custom-navbar .login-btn:hover {
+    color: var(--color-yellow);
+}
+
+.custom-navbar .signup-btn {
+    border: 1px solid var(--color-yellow);
+    border-radius: 12px;
+    background-color: var(--color-yellow);
+    width: 80px;
+    text-align: center;
+}
+
+.custom-navbar .nav-link.signup-btn:hover {
+    background-color: var(--color-dark-yellow);
+    border-color: var(--color-dark-yellow);
+    color: var(--color-light) !important;
+}
+
+.custom-navbar {
+    padding-block: 20px;
+    background-color: var(--color-dark-blue);
+}
+
+.custom-navbar .navbar-brand {
+    font-weight: 700;
+}
+
+.custom-navbar .nav-link:hover {
+    color: var(--color-yellow) !important;
+}
+
+.custom-navbar .navbar-toggler-icon {
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='rgb(255, 200, 12)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7 h22M4 15 h22M4 23 h22'/></svg>");
+    --bs-navbar-toggler-border-color: var(--color-yellow);
+}
+
+.custom-navbar .navbar-toggler:focus {
+    border-color: var(--color-yellow);
+}
+
+@media (max-width: 767px) {
+    .account-bar {
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+    }
+    .account-bar .dropdown-menu{
+        position: absolute;
+    }
+}
