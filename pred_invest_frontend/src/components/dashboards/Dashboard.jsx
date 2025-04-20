@@ -3,37 +3,58 @@ import {Card} from 'antd';
 import './dashboard.css';
 import {formatShortDate} from "@/utils/dashboards.js";
 
+export default function Dashboard({
+                                      data1,
+                                      data2,
+                                      chartType,
+                                      duration,
+                                      title,
+                                      color1,
+                                      color2,
+                                      label1 = 'Ticker 1',
+                                      label2 = 'Ticker 2'
+                                  }) {
 
-export default function Dashboard({data, chartType, duration}) {
-    const x = data.map(item => item.fullDate);
-    const y = data.map(item => item.rsi);
-    const mainColor = chartType === 'bar' ? '#82ca9d' : '#8884d8'
+    const prepareTrace = (data, color, label) => {
+        const x = data.map(item => new Date(item.fullDate));
+        const y = data.map(item => item.rsi);
 
-
-    const sliceSize = duration === 'month' ? 100 : 20
-
-    const tickVals = x.filter((_, i) => i % sliceSize === 0);
-    const tickText = tickVals.map(formatShortDate);
-
-    const trace = {
-        x,
-        y,
-        type: chartType === 'line' ? 'scatter' : 'bar',
-        mode: chartType === 'line' ? 'lines' : undefined,
-        marker: {color: mainColor},
-        line: {width: 2},
-        name: 'RSI',
-        hovertemplate: `<b>Date</b>: <span>%{x}</span><br><b>RSI</b>: <span>%{y}</span><extra></extra>`,
+        return {
+            x,
+            y,
+            type: chartType === 'line' ? 'scatter' : 'bar',
+            mode: chartType === 'line' ? 'lines' : undefined,
+            marker: {color},
+            line: {width: 2},
+            name: label,
+            hovertemplate: `<b>Date</b>: <span>%{x}</span><br><b>${label} RSI</b>: <span>%{y}</span><extra></extra>`,
+        };
     };
 
+    const x = data1.map(item => new Date(item.fullDate)); // общая ось X
+    let sliceSize = 1;
+    switch (duration) {
+        case 'week':
+            sliceSize = 20;
+            break;
+        case 'month':
+            sliceSize = 100;
+            break;
+    }
+    const tickVals = x.filter((_, i) => i % sliceSize === 0);
+    const tickText = tickVals.map(val => formatShortDate(val, duration));
+    console.log(data1);
+    const trace1 = prepareTrace(data1, color1, label1);
+    const trace2 = prepareTrace(data2, color2, label2);
+
     const layout = {
-        title: 'Overview',
+        title,
         xaxis: {
             title: 'Date',
             tickangle: -45,
             tickmode: 'array',
-            tickvals: tickVals,      // реальные значения
-            ticktext: tickText,      // отформатированные подписи
+            tickvals: tickVals,
+            ticktext: tickText,
             showgrid: true,
             nticks: 10
         },
@@ -41,27 +62,27 @@ export default function Dashboard({data, chartType, duration}) {
             title: 'RSI',
             showgrid: true,
         },
-        margin: {l: 50, r: 50, b: 50, t: 50},
+        margin: {l: 100, r: 100, b: 75, t: 30},
         plot_bgcolor: '#fff',
         paper_bgcolor: '#fff',
         hovermode: 'closest',
         hoverlabel: {
-            bgcolor: '#FFF',  // фон тултипа
+            bgcolor: '#FFF',
             font: {
-                color: mainColor,  // цвет текста в тултипе
+                color: '#000',
             },
-            bordercolor: mainColor, // цвет границы тултипа
+            bordercolor: '#ccc',
         },
     };
 
     return (
         <Card style={{borderRadius: '12px'}}>
-            <h2 className="mb-4">Overview</h2>
+            <h2>{title}</h2>
             <Plot
-                data={[trace]}
+                data={[trace1, trace2]}
                 layout={layout}
                 useResizeHandler
-                style={{width: '100%', height: '400px'}}
+                style={{width: '100%', height: '450px'}}
                 config={{responsive: true}}
             />
         </Card>

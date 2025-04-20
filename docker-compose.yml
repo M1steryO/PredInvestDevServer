@@ -12,20 +12,27 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
-  go-server:
-    image: m1stery/go-server:1.0.0
-    container_name: go-server
+  auth-server:
+    container_name: auth-server
     build: ./PredInvestAuthServer
     ports:
       - "8082:8082"
     depends_on:
       - postgres
-      - flask-server
+      - data-server
+    environment:
+    - CONFIG_PATH=./config/local.yaml
 
-  flask-server:
+  data-server:
     build: ./PredInvestDataServer
-    container_name: flask-server
+    container_name:   data-server
     ports:
       - "5001:5001"
     depends_on:
@@ -36,12 +43,11 @@ services:
     ports:
       - "5173:5173"
     depends_on:
-      - go-server
-      - flask-server
+      - auth-server
+      - data-server
+      - postgres
   
 
 volumes:
   pgdata: {}
 
-# networks:
-#   backend:

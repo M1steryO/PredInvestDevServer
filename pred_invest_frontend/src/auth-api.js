@@ -84,7 +84,25 @@ export async function fetchDashboards(symbol, chart_type, interval) {
         interval,
     });
     const response = await fetch(
-        `http://flask-server:5001/api/chart?${params.toString()}`,
+        `http://127.0.0.1:5001/api/chart?${params.toString()}`,
+        {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        }
+    );
+    if (response.status !== 200) {
+        throw new Error(response.statusText);
+    }
+    return await response.json();
+}
+
+export async function fetchPredictData(symbol) {
+
+    const params = new URLSearchParams({
+        symbol,
+    });
+    const response = await fetch(
+        `http://127.0.0.1:5001/api/predict?${params.toString()}`,
         {
             method: "GET",
             headers: {"Content-Type": "application/json"},
@@ -98,7 +116,7 @@ export async function fetchDashboards(symbol, chart_type, interval) {
 
 export async function fetchDataTypes() {
     const response = await fetch(
-        `http://flask-server:5001/api/data-types?`,
+        `http://127.0.0.1:5001/api/data-types?`,
         {
             method: "GET",
             headers: {"Content-Type": "application/json"},

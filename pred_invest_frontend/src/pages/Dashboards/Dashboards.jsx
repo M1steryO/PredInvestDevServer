@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import Loader from "@/components/utils/loader/Loader";
 import {notification, Select} from "antd";
 import "./Dashboards.css"
-import {fetchDashboards, fetchDataTypes} from "@/auth-api.js";
+import {fetchDashboards, fetchDataTypes, fetchPredictData} from "@/auth-api.js";
 import {formatDashboardResponse, formatDataTypeResponse} from "@/utils/dashboards.js";
 import {showErrorNotification} from "@/utils/notifications.js";
 import Dashboard from "@/components/dashboards/Dashboard.jsx";
@@ -10,6 +10,7 @@ import Dashboard from "@/components/dashboards/Dashboard.jsx";
 
 export default function MyDashboards() {
     const [data, setData] = useState([]);
+    const [predictData, setPredictData] = useState([]);
     const [dataType, setDataType] = useState(null);
     const [dataTypes, setDataTypes] = useState([]);
     const [chartType, setChartType] = useState("line");
@@ -47,9 +48,12 @@ export default function MyDashboards() {
                 setLoading(true);
                 setError(null);
                 try {
-                    let response = await fetchDashboards(dataType, "close", duration)
-                    const formatedResponse = formatDashboardResponse(response, duration);
-                    setData(formatedResponse);
+                    let realData = await fetchDashboards(dataType, "close", duration)
+                    let predictedData = await fetchPredictData(dataType)
+                    realData = formatDashboardResponse(realData, duration)
+                    predictedData = formatDashboardResponse(predictedData, duration)
+                    setData(realData)
+                    setPredictData(predictedData)
                     setChartTypeChosen(true)
                 } catch (error) {
                     setError(error);
@@ -62,13 +66,12 @@ export default function MyDashboards() {
 
 
     if (loading) return <Loader/>;
-    if (error) {
-        showErrorNotification(api, "An error occurred while loading the dashboard! Please try again later.")
-    }
-
+    // if (error) {
+    //     showErrorNotification(api, "An error occurred while loading the dashboard! Please try again later.")
+    // }
     return (
         <>
-            {contextHolder}
+            {/*{contextHolder}*/}
             <div className="my-5 container">
                 <div className="d-flex gap-4 mb-4">
                     <Select
@@ -136,7 +139,10 @@ export default function MyDashboards() {
                     </Select>
                 </div>
                 <div className="d-flex flex-column gap-4">
-                    <Dashboard data={data} dataType={dataType} chartType={chartType} duration={duration}/>
+                    <Dashboard data1={data} data2={predictData} color2={"#278d80"} label1={"Real data"}
+                               label2={"Predicted data"} dataType={dataType}
+                               chartType={chartType} duration={duration}
+                               title={!dataType ? "No data" : dataType + " data:"} color1={'#8884d8'}/>
                 </div>
 
 

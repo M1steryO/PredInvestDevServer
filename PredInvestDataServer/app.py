@@ -1,4 +1,7 @@
+import asyncio
 import json
+import os
+
 import pandas as pd
 from flask import Flask, request, jsonify
 
@@ -7,6 +10,8 @@ import plotly.io as pio
 from datetime import datetime, timedelta
 from moexalgo import Ticker
 from flask_cors import CORS
+
+from inference import run_inference, stocks
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"])
@@ -17,82 +22,52 @@ tickers = [
 ]
 
 
-def get_date_range(interval):
-    today = datetime.today()
-    if interval == 'week':
-        start_date = today - timedelta(days=7)
-    elif interval == 'month':
-        start_date = today - timedelta(days=30)
-    elif interval == 'year':
-        start_date = today - timedelta(days=365)
-    else:
-        start_date = today - timedelta(days=30)
-    return start_date.strftime('%Y-%m-%d'), today.strftime('%Y-%m-%d')
+@app.route('/api/predict')
+def predict():
+    symbol = request.args.get('symbol', 'SBER').upper()
+    data = pd.read_csv('rsi_predictions.csv')
 
+    data = data[data['ticker'] == symbol]
+    data['Date'] = pd.to_datetime(data['Date']) - pd.Timedelta(hours=1)
 
-def load_moex_data(symbol, start_date, end_date):
-    # Получение свечей с MOEX (дневные данные)
-    ticker = Ticker(symbol)
-    df = ticker.candles(start=start_date, end=end_date)
+    data = data.sort_values(by='Date')
+    data['RSI'] = data['RSI'].shift(-2)  # сдвиг rsi на 1 шаг назад
 
-    # Преобразование даты
-    df['begin'] = pd.to_datetime(df['begin'])
-    df = df.rename(columns={'begin': 'date'})
+    result = data[['Date', 'RSI']].rename(columns={'Date': 'fullDate', 'RSI': 'rsi'})
+    result = result.dropna(subset=['rsi'])  # удаляем последний NaN
 
-    # Скользящая средняя (SMA)
-    df['sma'] = df['close'].rolling(window=5).mean()
+    result['fullDate'] = result['fullDate'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
-    # RSI расчёт вручную
-    df['delta'] = df['close'].diff()
-    df['gain'] = df['delta'].clip(lower=0)
-    df['loss'] = -df['delta'].clip(upper=0)
-    df['avg_gain'] = df['gain'].rolling(window=14).mean()
-    df['avg_loss'] = df['loss'].rolling(window=14).mean()
-    df['rs'] = df['avg_gain'] / df['avg_loss']
-    df['rsi'] = 100 - (100 / (1 + df['rs']))
+    json_result = result.to_dict(orient='records')
+    return jsonify(json_result)
 
-    df = df[df['rsi'].notna()]
-    df = df[df['sma'].notna()]
-
-    return df[['date', 'close', 'sma', 'rsi']]
-
-
-# Построение графика
-def build_chart(df, chart_type, symbol):
-    if chart_type == 'close':
-        trace = go.Scatter(x=df['date'], y=df['close'], mode='lines', name='Close Price')
-    elif chart_type == 'sma':
-        trace = go.Scatter(x=df['date'], y=df['sma'], mode='lines', name='SMA (5)')
-    elif chart_type == 'rsi':
-        trace = go.Scatter(x=df['date'], y=df['rsi'], mode='lines', name='RSI (14)')
-    else:
-        trace = go.Scatter(x=df['date'], y=df['close'], mode='lines', name='Close Price (default)')
-
-    fig = go.Figure(data=[trace])
-    fig.update_layout(title=f"{symbol.upper()} — {chart_type.upper()}", xaxis_title="Date",
-                      yaxis_title=chart_type.upper(), height=500)
-    return pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
 
 
 @app.route('/api/data-types')
 def data_types():
-    return json.dumps(tickers)
+    return json.dumps(stocks)
 
 
 @app.route('/api/chart')
-def chart_api():
-    symbol = request.args.get('symbol', 'SBER').upper()
-    chart_type = request.args.get('chart_type', 'close')
-    interval = request.args.get('interval', 'month')  # 'week', 'month', 'year'
+def get_hourly_data():
+    symbol = request.args.get('symbol', 'SBER')
+    filename = f"dataset_{symbol}_hourly.csv"
 
-    if symbol not in tickers:
-        return f"Invalid symbol. Available: {', '.join(tickers)}", 400
+    path = os.path.join('datasets_hourly', filename)
 
-    start_date, end_date = get_date_range(interval)
+    if not os.path.exists(path):
+        return jsonify({'error': f'Data for symbol {symbol} not found'}), 404
+    df = pd.read_csv(path, parse_dates=['Date'])
+    cutoff = pd.Timestamp.now() - pd.Timedelta(days=3)
+    df = df[df['Date'] >= cutoff]
 
-    df = load_moex_data(symbol, start_date, end_date)
-    return jsonify(df.to_dict(orient='records'))
+    df['fullDate'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M:%S')
+    df = df[['fullDate', 'RSI']].rename(columns={'RSI': 'rsi'})
+    df = df.sort_values(by='fullDate')
+    df = df.dropna(subset=['rsi'])
+    output = df.to_dict(orient='records')
+    return output
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True,host="0.0.0.0", port=5001)

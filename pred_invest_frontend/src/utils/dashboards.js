@@ -1,8 +1,9 @@
 export const formatDashboardResponse = (response, duration) => {
+
     return response.map(val => {
         return {
-            rsi: val.rsi.toFixed(4),
-            fullDate: val.date,
+            rsi: parseFloat(val.rsi.toFixed(4)),
+            fullDate: val.date ?? val.fullDate,
         };
 
     });
@@ -18,10 +19,15 @@ export function formatDataTypeResponse(dataTypes) {
     ))
 }
 
-export const formatShortDate = (dateStr) => {
+export const formatShortDate = (dateStr, duration = 'month') => {
     const date = new Date(dateStr);
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear() % 100;
-    return `${day}/${month}/${year}`;
+    let res = `${day}/${month}`;
+    if (duration === 'day') {
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        res += `\n\n${hours}:${minutes}`;
+    }
+    return res
 };

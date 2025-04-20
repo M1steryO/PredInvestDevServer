@@ -29,12 +29,10 @@ type StorageConfig struct {
 }
 
 func MustLoad() *Config {
-	//configPath := os.Getenv("CONFIG_PATH")
-	//if configPath == "" {
-	//	log.Fatal("CONFIG_PATH is not set")
-	//}
-
-	configPath := "./config/local.yaml"
+	configPath := os.Getenv("CONFIG_PATH")
+	if configPath == "" {
+		log.Fatal("CONFIG_PATH is not set")
+	}
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		log.Fatalf("config file does not exist: %s", configPath)
