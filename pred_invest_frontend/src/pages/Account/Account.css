@@ -7,8 +7,7 @@
 
 .account-card .account-header {
     background-color: var(--color-dark-blue);
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
+    border-radius: 15px;
     padding-inline: 25px;
     padding-block: 40px;
     display: flex;

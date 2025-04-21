@@ -21,14 +21,14 @@ function TeamSection() {
                         <div className="col-lg-3 col-sm-6">
                             <div className="box ">
                                 <div className="img-box">
-                                <img src={teamImg1} alt="" style={{ transform: "rotate(-90deg);" }}/>
+                                    <img src={teamImg1} alt="" style={{ transform: "rotate(-90deg);" }}/>
                                 </div>
                                 <div className="detail-box">
                                     <h5>
-                                        Berdinskikh Nikitos
+                                        Berdinskikh Nikita
                                     </h5>
                                     <p>
-                                        Parsing Head
+                                        Data analysis and preprocessing
                                     </p>
                                 </div>
                                 <div className="social-box">
@@ -50,10 +50,10 @@ function TeamSection() {
                                 </div>
                                 <div className="detail-box">
                                     <h5>
-                                        Peschanskiy Dimas
+                                        Peschanskiy Dmitry
                                     </h5>
                                     <p>
-                                        FullStack Head
+                                        FullStack Development
                                     </p>
                                 </div>
                                 <div className="social-box">
@@ -75,10 +75,10 @@ function TeamSection() {
                                 </div>
                                 <div className="detail-box">
                                     <h5>
-                                        Pakhomov Zhendos
+                                        Pakhomov Eugene
                                     </h5>
                                     <p>
-                                        AI Head
+                                        Machine Learning
                                     </p>
                                 </div>
                                 <div className="social-box">

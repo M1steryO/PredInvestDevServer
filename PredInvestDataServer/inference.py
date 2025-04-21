@@ -18,7 +18,7 @@ pd.set_option('display.max_columns', 200)
 # ========== Параметры ==========
 stocks = ['AFLT', 'ALRS', 'CHMF', 'GAZP', 'GMKN', 'LKOH', 'MGNT', 'MOEX', 'MTSS', 'NVTK', 'SBER', 'TATN', 'VTBR']
 WINDOW = 3  # длина скользящего окна
-DAYS_BACK = 3  # смотреть назад N дней
+DAYS_BACK = 7  # смотреть назад N дней
 DATA_DIR = "datasets_hourly"
 WEIGHT_DIR = "weights"
 CSV_PATH = "rsi_predictions.csv"
@@ -148,7 +148,7 @@ def routine_all_windows():
 def run_inference():
     while True:
         now = datetime.datetime.now()
-        if now.minute == 0:
+        if now.minute == 4:
             print(f"\n=== {now} : обновляем данные + делаем прогнозы ===")
             update_data()
             time.sleep(5)

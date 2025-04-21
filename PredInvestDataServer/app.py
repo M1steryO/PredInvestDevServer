@@ -36,7 +36,7 @@ def predict():
     result = data[['Date', 'RSI']].rename(columns={'Date': 'fullDate', 'RSI': 'rsi'})
     result = result.dropna(subset=['rsi'])  # удаляем последний NaN
 
-    result['fullDate'] = result['fullDate'].dt.strftime('%Y-%m-%d %H:%M:%S')
+    # result['fullDate'] = result['fullDate'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
     json_result = result.to_dict(orient='records')
     return jsonify(json_result)
@@ -58,7 +58,7 @@ def get_hourly_data():
     if not os.path.exists(path):
         return jsonify({'error': f'Data for symbol {symbol} not found'}), 404
     df = pd.read_csv(path, parse_dates=['Date'])
-    cutoff = pd.Timestamp.now() - pd.Timedelta(days=3)
+    cutoff = pd.Timestamp.now() - pd.Timedelta(days=7)
     df = df[df['Date'] >= cutoff]
 
     df['fullDate'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -71,3 +71,4 @@ def get_hourly_data():
 
 if __name__ == '__main__':
     app.run(debug=True,host="0.0.0.0", port=5001)
+

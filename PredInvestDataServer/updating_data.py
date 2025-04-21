@@ -242,7 +242,7 @@ def update_df():
     base_dir = "datasets_hourly"
     os.makedirs(base_dir, exist_ok=True)
     now = datetime.datetime.now()
-    cutoff = now - datetime.timedelta(days=3)  # данные за последние 30 дней
+    cutoff = now - datetime.timedelta(days=7)
 
     for ticker in tickers:
         file_path = os.path.join(base_dir, f"dataset_{ticker}_hourly.csv")

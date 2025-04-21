@@ -32,11 +32,6 @@ export default function Account() {
                     </div>
                 </div>
 
-                <div className="account-body">
-                    <div className="d-flex justify-content-between align-items-center text-body">
-                        <p className="lead fw-normal mb-0">Statistics</p>
-                    </div>
-                </div>
             </div>
         </section>
     );

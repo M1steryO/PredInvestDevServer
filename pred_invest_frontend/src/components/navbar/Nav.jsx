@@ -58,7 +58,7 @@ export default function Nav() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mb-2 mb-lg-0">{getNavLinks()}</ul>
-                    <UserBar/>
+                    <UserBar isAuthorized={isAuth} userName={userData?.name}/>
                 </div>
             </div>
         </nav>

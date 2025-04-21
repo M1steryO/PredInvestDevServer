@@ -1,12 +1,9 @@
 import AccountBar from "./AccountBar/AccountBar";
 import UnauthorizedBar from "./UnauthorizedBar/UnauthorizedBar";
-import {useContext} from "react";
-import UserContext from "@/context/auth-context.jsx";
 
-export default function UserBar() {
-    const {isAuth} = useContext(UserContext);
-    return isAuth ? (
-        <AccountBar/>
+export default function UserBar({isAuthorized, userName}) {
+    return isAuthorized ? (
+        <AccountBar userName={userName}/>
     ) : (
         <UnauthorizedBar/>
     );

@@ -14,7 +14,6 @@ const {Title} = Typography;
 
 export default function EditProfile() {
     const {userData, setUpdateUserData} = useContext(UserContext);
-    console.log(userData)
     const navigate = useNavigate();
     const [api, contextHolder] = notification.useNotification();
 
